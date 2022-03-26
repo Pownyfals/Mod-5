@@ -16,13 +16,21 @@ namespace modul5_1302204081
 		public SayaTubeUser(string user)
 		{
 			this.uploadedVideo = new LinkedList<SayaTubeVideo>();
-			this.username = user;
+			if (user.Length < 100 && user != null)
+			{
+				this.username = user;
+				//mengenerate id number 5 digit
+				Random generator = new Random();
+				int randNum = generator.Next(100000);
+				string fiveDigitsNumber = randNum.ToString("D5");
+				this.id = Int32.Parse(fiveDigitsNumber);
+			}
+			else
+			{
+				Console.WriteLine("Invalid Username");
+			}
 
-			//mengenerate id number 5 digit
-			Random generator = new Random();
-			int randNum = generator.Next(100000);
-			string fiveDigitsNumber = randNum.ToString("D5");
-			this.id = Int32.Parse(fiveDigitsNumber);
+			
 		}
 		public int getTotalVideoPlayCount()
 		{
@@ -36,15 +44,34 @@ namespace modul5_1302204081
 
 		public void AddVideo(SayaTubeVideo video)
 		{
-			this.uploadedVideo.AddFirst(video);
+			//try and catch saat penambahan video
+			try
+			{
+				if(video != null && video.getPlayCount() != 2147483647){
+
+				this.uploadedVideo.AddFirst(video);
+			}
+				else
+				{
+					Console.WriteLine("Invalid Video");
+				}
+			}catch(Exception e)
+			{
+				Console.WriteLine(e.Message);
+			}
 		}
 
 		public void printAllVideoPlayCount()
 		{
+			Console.WriteLine("==========================================");
 			Console.WriteLine("User : "+this.username);
 			for(int i = 0; i < this.uploadedVideo.Count; i++)
 			{
-				Console.WriteLine("Video " + i + " " + this.uploadedVideo.ElementAt(i).getTitle());
+				//maksimal video di print 8
+				if (i <= 8)
+				{
+				Console.WriteLine("Video " + (i+1) + " " + this.uploadedVideo.ElementAt(i).getTitle());
+				}
 			}
 		}
 	}

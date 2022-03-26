@@ -16,15 +16,17 @@ namespace modul5_1302204081
 		public SayaTubeVideo(String title)
 		{
 			int totalStrJudul = title.Length;
-				if (totalStrJudul <= 100)
-				{
-					this.title = title;
+			
+			if (totalStrJudul <= 200 & title != null&& title != "")
+			{
+				this.title = title;
 			}
 			else
 			{
-				this.title = " ";
+				Console.WriteLine("Judul Invalid");
+				Console.WriteLine("Judul tidak kosong dan karakter judul tidak boleh lebih dari 200 karakter");
 			}
-			
+
 
 			//mengenerate id number 5 digit
 			Random generator = new Random();
@@ -38,7 +40,20 @@ namespace modul5_1302204081
 
 		public void increasePlayCount(int playCount)
 		{
-			this.playCount = playCount;
+			try
+			{
+				if(playCount <= 25000000 && playCount > 0)
+				{
+				this.playCount = playCount;
+				}
+				else
+				{
+					Console.WriteLine("invalid PlayCount");
+				}
+			}catch(Exception e)
+			{
+				Console.WriteLine(e.Message);
+			}
 
 		}
 		public int getPlayCount()
